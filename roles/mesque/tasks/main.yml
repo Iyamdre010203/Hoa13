@@ -1,0 +1,28 @@
+#mesque
+#main.yml
+---
+- name: Install RabbitMQ server
+  package:
+    name: rabbitmq-server
+    state: present
+  become: true
+
+- name: Start and enable RabbitMQ service
+  service:
+    name: rabbitmq-server
+    state: started
+    enabled: yes
+  become: true
+
+- name: Add RabbitMQ user
+  rabbitmq_user:
+    user: openstack
+    password: server54321
+    vhost: /
+    configure_priv: ".*"
+    read_priv: ".*"
+    write_priv: ".*"
+    state: present
+  become: true
+
+
